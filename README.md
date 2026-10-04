@@ -105,6 +105,28 @@ PompNet Pro Panel - High-performance server monitoring and management web dashbo
 2. به تب **Settings** بروید.
 3. در بخش **Networking** یا **Public Networking**، روی دکمه **Generate Domain** کلیک کنید.
 4. آدرس اینترنتی اختصاصی پروژه شما (مثلاً `pompnet-panel-production.up.railway.app`) ساخته می‌شود.
+🌟 ویژگی‌های MR:Mohammad Pomp Net
+
+✅ پنل ادمین با برند اختصاصی pomp Net و پالت رنگی مدرن مشکی و بنفش
+✅ تشخیص خودکار کلاینت‌های VPN (مانند v2rayNG، V2RayN، Shadowrocket و Sing-box) و تحویل لینک خام ساب
+✅ صفحه‌ی اشتراک شکیل فارسی با QR Code زنده، نوار پیشرفت مصرف حجم و تاریخ و ساعت شمسی
+✅ پشتیبانی کامل از ۶ پروتکل قدرتمند: VLESS, VMESS, Trojan, Shadowsocks, Hysteria2, TUIC
+✅ تنظیم خودکار Timezone روی ساعت رسمی ایران (Asia/Tehran)
+✅ مانیتورینگ زنده منابع سرور (درصد مصرف CPU، رم و فضای دیسک)
+
+🔧 ابزارها و تکنولوژی‌های استفاده‌شده:
+• FastAPI, Uvicorn, Jinja2, Psutil, Qrcode, Jdatetime
+• Docker, Nginx, X-Ray Core, Tailwind CSS, Bootstrap, FontAwesome
+
+📞 راه‌های ارتباطی و پشتیبانی مجموعه پمپ نت:
+• 🆔 تلگرام ادمین: @NovaTunneli
+• 📢 کانال تلگرام: @pompnet
+• 👥 گپ مجموعه: t.me/+UV34C7Ohs9hiZTc0
+• 💬 واتساپ ادمین: wa.me/message/LRTDKAYCT6IMN1
+• ⚖️ قوانین پنل‌ها: http://45.74.158.48:8002/dashboard
+• 💻 سورس کد پروژه در گیت‌هاب: github.com/uxurx7rh7e7xr73uue73e8
+• ☁️ میزبانی و دیپلوی رایگان: railway.com
+
 
 ---
 
