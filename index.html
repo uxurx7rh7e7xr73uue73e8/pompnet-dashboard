@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>PumpNet Panel - Secure Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #050508;
+            --card-bg: rgba(15, 20, 35, 0.8);
+            --neon-blue: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.4);
+            --accent-purple: #9d4edd;
+            --text-main: #e0e6ed;
+            --text-muted: #8a99ad;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(5, 5, 8, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: floatOrb 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+        .glow-1 { top: -100px; left: -100px; }
+        .glow-2 { bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 40px) scale(1.25); }
+        }
+
+        .page-container {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        .page-container.active {
+            display: flex;
+        }
+
+        /* Login Page */
+        #login-page {
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: radial-gradient(circle at center, #0a1128 0%, #050508 100%);
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 400px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            text-align: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .login-logo-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            background: linear-gradient(135deg, #0077b6, #00f0ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #050508;
+            font-size: 1.2rem;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 0 20px var(--neon-blue);
+            animation: pulseLogo 2.5s infinite;
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% { box-shadow: 0 0 15px var(--neon-blue); }
+            50% { box-shadow: 0 0 30px var(--neon-blue), 0 0 10px rgba(157,78,221,0.5); }
+        }
+
+        .login-card h2 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .dev-badge {
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(5, 5, 8, 0.9);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 15px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .login-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 12px var(--neon-glow);
+        }
+
+        .neon-btn {
+            background: linear-gradient(135deg, #0077b6, #00f0ff);
+            color: #050508;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            transition: 0.3s;
+        }
+
+        .neon-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+            transform: scale(1.02);
+        }
+
+        /* Dashboard Layout */
+        #dashboard-page {
+            display: none;
+        }
+        #dashboard-page.active {
+            display: flex;
+        }
+
+        sidebar {
+            width: 260px;
+            background: rgba(8, 12, 22, 0.95);
+            border-left: 1px solid rgba(0, 240, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            padding: 25px 20px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.6);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-logo-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            background: linear-gradient(135deg, #0077b6, #00f0ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #050508;
+            font-size: 0.8rem;
+            box-shadow: 0 0 12px var(--neon-blue);
+        }
+
+        .sidebar-brand h1 {
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .sidebar-brand span {
+            font-size: 0.75rem;
+            color: var(--neon-blue);
+            display: block;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(0, 240, 255, 0.1);
+            color: #fff;
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            transform: translateX(-4px);
+        }
+
+        .logout-btn {
+            padding: 12px;
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.4);
+            color: #ff6b6b;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background: rgba(220, 53, 69, 0.3);
+            box-shadow: 0 0 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 35px;
+            overflow-y: auto;
+        }
+
+        .section-view {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+        .section-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .card-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0,240,255,0.5);
+        }
+
+        .form-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 14px;
+            padding: 30px;
+            max-width: 700px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(5, 5, 8, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .social-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .social-card:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .social-card h3 {
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .social-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px 20px;
+            text-align: right;
+        }
+
+        .data-table th {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-blue);
+            font-size: 0.95rem;
+        }
+
+        .data-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(40, 167, 69, 0.15);
+            border: 1px solid rgba(40, 167, 69, 0.4);
+            color: #28a745;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page-container active">
+        <div class="login-card">
+            <div class="login-logo-circle">Pump</div>
+            <h2>PumpNet Panel</h2>
+            <span class="dev-badge">کد نویسی شده توسط تیم پمپ نت</span>
+            
+            <div class="input-group" style="text-align: right;">
+                <input type="text" class="login-input" placeholder="نام کاربری ادمین" value="admin">
+            </div>
+            <div class="input-group" style="text-align: right;">
+                <input type="password" class="login-input" placeholder="رمز عبور" value="••••••••">
+            </div>
+            <button class="neon-btn" onclick="goToDashboard()">ورود به پنل مدیریت 🚀</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page-container">
+        <sidebar>
+            <div class="sidebar-brand">
+                <div class="sidebar-logo-circle">Pump</div>
+                <div>
+                    <h1>PumpNet Panel</h1>
+                    <span>تیم پمپ نت</span>
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="switchSection('dashboard', this)">📊 داشبورد زنده</li>
+                <li class="nav-item" onclick="switchSection('create-config', this)">➕ ساخت کانفیگ جدید</li>
+                <li class="nav-item" onclick="switchSection('inbounds', this)">🌐 مدیریت کانفیگ‌ها</li>
+                <li class="nav-item" onclick="switchSection('socials', this)">💬 گپ، آیدی و ارتباطات</li>
+                <li class="nav-item" onclick="switchSection('subscription', this)">🔗 لینک اشتراک (Sub)</li>
+                <li class="nav-item" onclick="switchSection('settings', this)">⚙️ تنظیمات امنیتی</li>
+            </ul>
+
+            <div class="logout-btn" onclick="logout()">خروج از پنل 🚪</div>
+        </sidebar>
+
+        <div class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard" class="section-view active">
+                <h2 class="section-title">📊 مانیتورینگ و وضعیت زنده سیستم</h2>
+                <div class="stats-grid">
+                    <div class="card">
+                        <div class="card-label">پردازنده (CPU)</div>
+                        <div class="card-value" id="cpu-stat">14.2%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">حافظه رم (RAM)</div>
+                        <div class="card-value" id="ram-stat">46.5%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">فضای دیسک (Disk)</div>
+                        <div class="card-value">29.1%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">نودهای فعال پمپ نت</div>
+                        <div class="card-value" style="color: var(--neon-blue);">6</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-label" style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">💡 گزارش وضعیت هوشمند سرور</div>
+                    <p style="color: var(--text-muted); line-height: 1.8;">
+                        تمامی پروتکل‌ها و گپ‌های ارتباطی تیم پمپ نت روی بستر ابری پایدار فعال هستند و ترافیک به صورت امن مسیریابی می‌شود.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Create Config View -->
+            <div id="create-config" class="section-view">
+                <h2 class="section-title">➕ ساخت و راه‌اندازی کانفیگ جدید</h2>
+                <div class="form-box">
+                    <div class="input-group">
+                        <label>نام کانفیگ (Tag Name)</label>
+                        <input type="text" value="PumpNet-VLESS-VIP">
+                    </div>
+                    <div class="input-group">
+                        <label>انتخاب پروتکل</label>
+                        <select class="login-input">
+                            <option>VLESS (WebSocket / TLS)</option>
+                            <option>VMess (gRPC)</option>
+                            <option>Trojan</option>
+                            <option>Shadowsocks</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>پورت اتصال (Port)</label>
+                        <input type="number" value="443" class="login-input">
+                    </div>
+                    <button class="neon-btn" onclick="alert('کانفیگ جدید پمپ نت با موفقیت ایجاد شد!')">ساخت و دریافت لینک 🚀</button>
+                </div>
+            </div>
+
+            <!-- Inbounds View -->
+            <div id="inbounds" class="section-view">
+                <h2 class="section-title">🌐 لیست کانفیگ‌ها و پروتکل‌های فعال</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>نام کانفیگ</th>
+                            <th>پروتکل</th>
+                            <th>پورت</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PumpNet-Master-VLESS</td>
+                            <td style="color: var(--neon-blue);">VLESS</td>
+                            <td>443</td>
+                            <td><span class="status-badge">● فعال و پایدار</span></td>
+                            <td><button class="neon-btn" style="padding: 6px 14px; width: auto;" onclick="alert('لینک کپی شد!')">کپی لینک</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Socials & Chat View -->
+            <div id="socials" class="section-view">
+                <h2 class="section-title">💬 گپ، آیدی و ارتباطات تیم پمپ نت</h2>
+                <div class="social-grid">
+                    <a href="https://t.me/pumpnet_chat" target="_blank" class="social-card">
+                        <h3>گپ تلگرام پمپ نت</h3>
+                        <p>عضویت در گروه گفتگو و پشتیبانی کاربران</p>
+                    </a>
+                    <a href="https://t.me/pumpnet_support" target="_blank" class="social-card">
+                        <h3>آیدی پشتیبانی</h3>
+                        <p>ارتباط مستقیم با ادمین و تیم فنی</p>
+                    </a>
+                    <a href="https://t.me/pumpnet_channel" target="_blank" class="social-card">
+                        <h3>کانال رسمی</h3>
+                        <p>دریافت آخرین آپدیت‌ها و کانفیگ‌های رایگان</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Subscription View -->
+            <div id="subscription" class="section-view">
+                <h2 class="section-title">🔗 لینک اشتراک (Subscription Link)</h2>
+                <div class="form-box">
+                    <div class="input-group">
+                        <label>لینک عمومی ساب‌کریپشن کلاینت‌ها</label>
+                        <input type="text" readonly value="https://pumpnet-panel.up.railway.app/sub" style="color: var(--neon-blue);">
+                    </div>
+                    <button class="neon-btn" onclick="alert('لینک اشتراک در کلیپ‌بورد کپی شد!')">لینک اشتراک 📋</button>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings" class="section-view">
+                <h2 class="section-title">⚙️ تنظیمات امنیتی ادمین و ربات تلگرام</h2>
+                <div class="form-box">
+                    <div class="input-group">
+                        <label>نام کاربری ادمین</label>
+                        <input type="text" value="admin" class="login-input">
+                    </div>
+                    <div class="input-group">
+                        <label>رمز عبور جدید</label>
+                        <input type="password" value="********" class="login-input">
+                    </div>
+                    <div class="input-group">
+                        <label>توکن ربات تلگرام</label>
+                        <input type="text" value="7829104:PumpNet_Bot_Token" class="login-input">
+                    </div>
+                    <button class="neon-btn" onclick="alert('تغییرات با موفقیت ذخیره شد!')">ذخیره تغییرات 💾</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToDashboard() {
+            document.getElementById('login-page').classList.remove('active');
+            document.getElementById('dashboard-page').classList.add('active');
+        }
+
+        function logout() {
+            document.getElementById('dashboard-page').classList.remove('active');
+            document.getElementById('login-page').classList.add('active');
+        }
+
+        function switchSection(sectionId, element) {
+            document.querySelectorAll('.section-view').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        setInterval(() => {
+            const cpu = (12 + Math.random() * 5).toFixed(1);
+            const ram = (45 + Math.random() * 3).toFixed(1);
+            const cpuEl = document.getElementById('cpu-stat');
+            const ramEl = document.getElementById('ram-stat');
+            if(cpuEl) cpuEl.innerText = cpu + '%';
+            if(ramEl) ramEl.innerText = ram + '%';
+        }, 2000);
+    </script>
+</body>
+</html>
