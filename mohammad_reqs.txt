@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+jinja2
+psutil
+python-multipart
+qrcode
+jdatetime
+pyTelegramBotAPI
