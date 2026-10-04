@@ -124,3 +124,31 @@ PompNet Pro Panel - High-performance server monitoring and management web dashbo
    `https://YOUR-RAILWAY-URL/api/stats`
 
 
+🚀 راهنمای سریع و گام‌به‌گام دیپلوی پروژه روی Railway
+
+مرحله ۱: ورود به سایت Railway
+۱. وارد سایت https://railway.app شوید.
+۲. روی گزینه "Log In" کلیک کرده و با حساب GitHub خود وارد شوید.
+
+مرحله ۲: ساخت پروژه جدید
+۱. در داشبورد اصلی روی دکمه "+ New Project" کلیک کنید.
+۲. از لیست بازشده، گزینه "Deploy from GitHub repo" را انتخاب کنید.
+۳. مخزنی که ساختید (pompnet-panel) را پیدا کرده و روی آن کلیک کنید.
+
+مرحله ۳: فرآیند Deploy (استقرار)
+۱. روی دکمه "Deploy Now" کلیک کنید.
+۲. حدود ۳۰ الی ۶۰ ثانیه صبر کنید تا Railway فایل‌های requirements.txt و Procfile را شناسایی کرده و برنامه را Build کند.
+۳. وقتی رنگ وضعیت پروژه سبز شد و عبارت "Active" یا "Success" را دیدید، یعنی سرور پایتون اجرا شده است.
+
+مرحله ۴: گرفتن آدرس و لینک آنلاین (Generate Domain)
+۱. روی کارت پروژه خود کلیک کنید تا وارد جزئیات شوید.
+۲. به تب "Settings" در بالای صفحه بروید.
+۳. صفحه را به سمت پایین اسکرول کنید تا به بخش "Networking" (یا Public Networking) برسید.
+۴. روی دکمه "Generate Domain" کلیک کنید.
+۵. یک آدرس اینترنتی اختصاصی (مثلاً https://pompnet-panel-production.up.railway.app) به شما داده می‌شود.
+
+اکنون پنل شما کاملاً آنلاین است و می‌توانید با باز کردن لینک، مصرف منابع و وضعیت سرور را به‌صورت زنده مشاهده کنید!
+
+
+
+
