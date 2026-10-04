@@ -172,5 +172,33 @@ PompNet Pro Panel - High-performance server monitoring and management web dashbo
 اکنون پنل شما کاملاً آنلاین است و می‌توانید با باز کردن لینک، مصرف منابع و وضعیت سرور را به‌صورت زنده مشاهده کنید!
 
 
+==================================================
+  آموزش جامع ساخت، راه‌اندازی و کار با پنل GhostCore
+==================================================
+
+1. ساختار فایل‌های پروژه:
+   برای راه‌اندازی پنل، فایل‌های زیر را با همین نام‌ها در ریپازیتوری خود بسازید:
+   - config.py (تنظیمات پایه، برندینگ و پروتکل‌ها)[span_0](start_span)[span_0](end_span)
+   - main.py (هسته سرور FastAPI، مدیریت Xray و روت‌ها)[span_1](start_span)[span_1](end_span)
+   - Dockerfile (فایل داکر برای دیپلوی در هاست ابری)[span_2](start_span)[span_2](end_span)
+   - reqs.txt (لیست کتابخانه‌های پایتون)[span_3](start_span)[span_3](end_span)
+   - PROJECT.md (فایل مستندات گیت‌هاب)[span_4](start_span)[span_4](end_span)
+   - templates/panel_home.html (صفحه مدیریت اصلی با مانیتورینگ زنده و صدا)[span_5](start_span)[span_5](end_span)
+   - templates/user_sub.html (صفحه اشتراک اختصاصی با QR Code و تاریخ شمسی)[span_6](start_span)[span_6](end_span)
+
+2. مراحل دیپلوی روی ریلووی (Railway):
+   - گام اول: تمام کدهای پروژه را داخل یک ریپازیتوری جدید در گیت‌هاب آپلود کنید[span_7](start_span)[span_7](end_span).
+   - گام دوم: وارد سایت Railway شده و یک پروژه جدید بسازید[span_8](start_span)[span_8](end_span).
+   - گام سوم: گزینه "Deploy from GitHub repo" را انتخاب کرده و مخزن خود را متصل کنید[span_9](start_span)[span_9](end_span).
+   - گام چهارم: داکر به صورت خودکار فایل Dockerfile را اجرا کرده و پکیج‌ها را نصب می‌کند[span_10](start_span)[span_10](end_span).
+   - گام پنجم: به بخش تنظیمات (Settings) و قسمت Networking بروید و یک دامین عمومی برای پروژه‌تان ایجاد کنید.
+
+3. نحوه کارکرد پنل:
+   - صفحه اصلی مدیریت (/): امکان مشاهده وضعیت زنده منابع سرور (CPU، رم، دیسک) و کپی کردن سریع کانفیگ پروتکل‌های مختلف (VLESS, VMess, Trojan, Shadowsocks, Hysteria2, TUIC)[span_11](start_span)[span_11](end_span).
+   - لینک ساب‌کریپشن هوشمند (/sub): تشخیص خودکار کلاینت؛ اگر با برنامه‌های VPN باز شود لیست خام کانفیگ‌ها را می‌دهد و اگر در مرورگر باز شود صفحه اشتراک شکیل فارسی با QR Code و نوار مصرف حجم را نمایش می‌دهد[span_12](start_span)[span_12](end_span).
+==================================================
+
+
+
 
 
