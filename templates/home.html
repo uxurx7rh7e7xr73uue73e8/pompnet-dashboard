@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #090a0f;
+            --card-bg: #121526;
+            --accent-purple: #9d4edd;
+            --accent-cyan: #00f5d4;
+            --text-color: #e2e8f0;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            padding-bottom: 50px;
+        }
+        .card-custom {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(157, 78, 221, 0.25);
+            border-radius: 16px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.15), rgba(0, 245, 212, 0.05));
+            border-left: 4px solid var(--accent-purple);
+        }
+        .btn-purple {
+            background-color: var(--accent-purple);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+        .btn-purple:hover {
+            background-color: #7b2cbf;
+            color: white;
+        }
+        .badge-proto {
+            background-color: #2b2d42;
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark mb-4 border-bottom border-purple">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <img src="{{ logo }}" alt="PompNet" height="40">
+            <span class="fw-bold fs-4 text-purple">{{ brand }}</span>
+        </a>
+        <span class="badge bg-success"><i class="fas fa-server"></i> Xray Core Active</span>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Sub Link Box -->
+    <div class="card card-custom mb-4 p-3">
+        <h5 class="text-info mb-2"><i class="fas fa-rss"></i> لینک ساب‌کانفیگ جامع هوشمند</h5>
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 bg-dark p-3 rounded border border-secondary">
+            <code class="text-info fs-6" id="subUrl">{{ sub_link }}</code>
+            <button class="btn btn-purple btn-sm" onclick="navigator.clipboard.writeText('{{ sub_link }}'); alert('لینک ساب با موفقیت کپی شد!');">
+                <i class="fas fa-copy"></i> کپی لینک ساب
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card card-custom stat-card p-3">
+                <div class="text-muted small">پردازنده (CPU)</div>
+                <div class="fs-3 fw-bold text-info">{{ stats.cpu }}%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom stat-card p-3">
+                <div class="text-muted small">حافظه رم (RAM)</div>
+                <div class="fs-3 fw-bold text-purple">{{ stats.ram }}%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom stat-card p-3">
+                <div class="text-muted small">دیسک سرور</div>
+                <div class="fs-3 fw-bold text-warning">{{ stats.disk }}%</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom stat-card p-3">
+                <div class="text-muted small">کانفیگ‌های فعال</div>
+                <div class="fs-3 fw-bold text-success">{{ stats.total_active }} عدد</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Config Form -->
+    <div class="card card-custom mb-4 p-4">
+        <h5 class="text-purple mb-3"><i class="fas fa-plus-circle"></i> ساخت کانفیگ جدید و آنلاین</h5>
+        <form action="/add-inbound" method="post" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">نام کانفیگ</label>
+                <input type="text" name="name" class="form-control bg-dark text-white border-secondary" placeholder="مثلاً: PompNet-Fast-VLESS" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">پروتکل</label>
+                <select name="protocol" class="form-select bg-dark text-white border-secondary">
+                    <option value="VLESS">VLESS</option>
+                    <option value="VMess">VMess</option>
+                    <option value="Trojan">Trojan</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">نوع ترنسپورت (Transport)</label>
+                <select name="transport" class="form-select bg-dark text-white border-secondary">
+                    <option value="WebSocket CDN">WebSocket (CDN)</option>
+                    <option value="HTTPUpgrade">HTTPUpgrade</option>
+                </select>
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-purple"><i class="fas fa-bolt"></i> ساخت فوری کانفیگ</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Active Configs List -->
+    <h4 class="text-purple mb-3"><i class="fas fa-network-wired"></i> لیست کانفیگ‌های فعال سرور</h4>
+    <div class="row g-3">
+        {% for item in inbounds %}
+        <div class="col-md-6">
+            <div class="card card-custom p-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <h6 class="fw-bold">{{ item.name }}</h6>
+                    <span class="badge badge-proto">{{ item.protocol }}</span>
+                </div>
+                <p class="text-muted small mb-2">ترنسپورت: {{ item.type }} | مسیر: <code>{{ item.path }}</code></p>
+                <button class="btn btn-outline-light btn-sm w-100 mt-2" onclick="navigator.clipboard.writeText('{{ item.link }}'); alert('کانفیگ کپی شد!');">
+                    <i class="fas fa-key"></i> کپی کانفیگ {{ item.protocol }}
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>
