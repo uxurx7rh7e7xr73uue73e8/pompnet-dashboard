@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MR:Mohammad Pomp Net</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:
+radial-gradient(circle at top right,#5d19a855,transparent 35%),
+radial-gradient(circle at bottom left,#006eff55,transparent 35%),
+#050509;
+color:#fff;
+font-family:Tahoma,Arial;
+min-height:100vh
+}
+
+header{
+position:sticky;
+top:0;
+z-index:10;
+padding:22px;
+background:#090912ee;
+border-bottom:1px solid #ffffff14;
+backdrop-filter:blur(15px)
+}
+
+.logo{
+font-size:25px;
+font-weight:bold
+}
+
+.version{
+font-size:12px;
+color:#999;
+margin-top:7px
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:20px
+}
+
+.stat{
+background:#11111c;
+border:1px solid #ffffff12;
+border-radius:20px;
+padding:20px
+}
+
+.stat b{
+display:block;
+font-size:28px;
+margin-top:8px
+}
+
+.buttons{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:14px
+}
+
+button{
+border:1px solid #ffffff15;
+background:linear-gradient(145deg,#181827,#0e0e18);
+color:white;
+padding:20px;
+border-radius:18px;
+cursor:pointer;
+font-size:15px;
+transition:.2s
+}
+
+button:hover{
+transform:translateY(-3px);
+border-color:#7b42ff;
+box-shadow:0 0 25px #6c35ff44
+}
+
+.icon{
+font-size:30px;
+display:block;
+margin-bottom:8px
+}
+
+.section{
+display:none;
+margin-top:20px
+}
+
+.section.active{
+display:block
+}
+
+.panel{
+background:#0d0d17;
+border:1px solid #ffffff12;
+border-radius:22px;
+padding:20px
+}
+
+input,
+textarea{
+width:100%;
+padding:14px;
+margin:6px 0;
+border-radius:12px;
+background:#07070d;
+border:1px solid #33334a;
+color:white
+}
+
+textarea{
+min-height:120px;
+resize:vertical
+}
+
+.primary{
+background:linear-gradient(90deg,#743cff,#087fff);
+border:0
+}
+
+.danger{
+background:#641d32
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #ffffff10;
+text-align:right
+}
+
+a{
+color:#75b6ff;
+text-decoration:none
+}
+
+.footer{
+text-align:center;
+color:#777;
+padding:35px 10px
+}
+
+.badge{
+display:inline-block;
+padding:5px 10px;
+border-radius:20px;
+background:#172e20;
+color:#70e49a
+}
+
+.notice{
+padding:15px;
+margin-top:15px;
+border-radius:15px;
+background:#121221;
+border:1px solid #ffffff10
+}
+
+@media(max-width:600px){
+.logo{font-size:20px}
+.container{padding:12px}
+button{padding:16px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">🚀 MR:Mohammad Pomp Net</div>
+<div class="version">نسخه پنل: 2026.10.05</div>
+</header>
+
+<div class="container">
+
+<div class="stats">
+
+<div class="stat">
+کانفیگ‌ها
+<b id="clientCount">0</b>
+</div>
+
+<div class="stat">
+ربات‌ها
+<b id="botCount">0</b>
+</div>
+
+<div class="stat">
+وضعیت
+<b>ONLINE</b>
+</div>
+
+<div class="stat">
+نسخه
+<b>2026.10.05</b>
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<button onclick="show('dashboard')">
+<span class="icon">📊</span>
+داشبورد
+</button>
+
+<button onclick="show('vpn')">
+<span class="icon">🔐</span>
+کاربران و کانفیگ‌ها
+</button>
+
+<button onclick="show('bots')">
+<span class="icon">🤖</span>
+Telegram Bots
+</button>
+
+<button onclick="show('subscription')">
+<span class="icon">🔗</span>
+Subscription
+</button>
+
+<button onclick="show('cloudflare')">
+<span class="icon">☁️</span>
+Cloudflare
+</button>
+
+<button onclick="show('github')">
+<span class="icon">🐙</span>
+GitHub
+</button>
+
+<button onclick="show('railway')">
+<span class="icon">🚂</span>
+Railway
+</button>
+
+<button onclick="show('tools')">
+<span class="icon">🛠️</span>
+ابزارها
+</button>
+
+<button onclick="show('settings')">
+<span class="icon">⚙️</span>
+تنظیمات
+</button>
+
+<button onclick="show('support')">
+<span class="icon">💬</span>
+پشتیبانی
+</button>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="section active">
+
+<div class="panel">
+
+<h2>📊 داشبورد</h2>
+
+<p>پنل PompNet فعال است.</p>
+
+<div class="notice">
+وضعیت سیستم:
+<span class="badge">ONLINE</span>
+</div>
+
+<div id="dashboardStatus">
+در حال دریافت اطلاعات...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- VPN -->
+
+<div id="vpn" class="section">
+
+<div class="panel">
+
+<h2>🔐 کاربران و کانفیگ‌ها</h2>
+
+<form onsubmit="addClient(event)">
+
+<input
+id="clientName"
+placeholder="نام کاربر"
+required>
+
+<textarea
+id="clientLink"
+placeholder="VLESS / VMESS / Trojan / SS / Hysteria2 / TUIC"
+required></textarea>
+
+<button class="primary" type="submit">
+➕ ذخیره کانفیگ
+</button>
+
+</form>
+
+<table>
+
+<thead>
+<tr>
+<th>نام</th>
+<th>پروتکل</th>
+<th>Subscription</th>
+<th>حذف</th>
+</tr>
+</thead>
+
+<tbody id="clients"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- BOTS -->
+
+<div id="bots" class="section">
+
+<div class="panel">
+
+<h2>🤖 Telegram Bots</h2>
+
+<form onsubmit="addBot(event)">
+
+<input
+id="botName"
+placeholder="نام ربات"
+required>
+
+<input
+id="botToken"
+placeholder="Bot Token"
+required>
+
+<button class="primary" type="submit">
+➕ افزودن ربات
+</button>
+
+</form>
+
+<table>
+
+<thead>
+<tr>
+<th>نام</th>
+<th>Username</th>
+<th>وضعیت</th>
+<th>عملیات</th>
+</tr>
+</thead>
+
+<tbody id="botRows"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- SUBSCRIPTION -->
+
+<div id="subscription" class="section">
+
+<div class="panel">
+
+<h2>🔗 Subscription</h2>
+
+<p>
+برای هر کانفیگ واقعی ذخیره‌شده، لینک Subscription ساخته می‌شود.
+</p>
+
+<div id="subscriptionList">
+در حال دریافت...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CLOUDFLARE -->
+
+<div id="cloudflare" class="section">
+
+<div class="panel">
+
+<h2>☁️ Cloudflare</h2>
+
+<div id="cloudflareResult">
+در حال بررسی اتصال...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- GITHUB -->
+
+<div id="github" class="section">
+
+<div class="panel">
+
+<h2>🐙 GitHub</h2>
+
+<p>Repository پروژه:</p>
+
+<a
+target="_blank"
+href="https://github.com/uxurx7rh7e7xr73uue73e8/pompnet-dashboard">
+
+github.com/uxurx7rh7e7xr73uue73e8/pompnet-dashboard
+
+</a>
+
+<div class="notice" id="githubResult">
+در حال بررسی...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RAILWAY -->
+
+<div id="railway" class="section">
+
+<div class="panel">
+
+<h2>🚂 Railway</h2>
+
+<div id="railwayResult">
+در حال بررسی...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TOOLS -->
+
+<div id="tools" class="section">
+
+<div class="panel">
+
+<h2>🛠️ ابزارها</h2>
+
+<br>
+
+<button onclick="location.href='/health'">
+❤️ Health Check
+</button>
+
+<br><br>
+
+<button onclick="location.href='/api/config'">
+⚙️ Panel API
+</button>
+
+<br><br>
+
+<button onclick="location.href='/logout'">
+🚪 خروج
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div id="settings" class="section">
+
+<div class="panel">
+
+<h2>⚙️ تنظیمات</h2>
+
+<p>نام پنل: MR:Mohammad Pomp Net</p>
+
+<p>نسخه پنل: 2026.10.05</p>
+
+<p>
+VLESS • VMESS • Trojan • Shadowsocks • Hysteria2 • TUIC
+</p>
+
+</div>
+
+</div>
+
+
+<!-- SUPPORT -->
+
+<div id="support" class="section">
+
+<div class="panel">
+
+<h2>💬 پشتیبانی</h2>
+
+<p>
+Telegram:
+<a href="https://t.me/NovaTunneli" target="_blank">
+@NovaTunneli
+</a>
+</p>
+
+<p>
+گروه PompNet:
+<a href="https://t.me/PompNett" target="_blank">
+PompNett
+</a>
+</p>
+
+<p>
+WhatsApp:
+<a href="https://wa.me/message/LRTDKAYCT6IMN1" target="_blank">
+پشتیبانی
+</a>
+</p>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+MR:Mohammad Pomp Net
+
+<br><br>
+
+نسخه پنل: 2026.10.05
+
+</div>
+
+</div>
+
+
+<script>
+
+function show(id){
+
+document
+.querySelectorAll(".section")
+.forEach(function(x){
+x.classList.remove("active");
+});
+
+document
+.getElementById(id)
+.classList.add("active");
+
+if(id==="vpn") loadClients();
+if(id==="bots") loadBots();
+if(id==="subscription") loadClients();
+if(id==="cloudflare") loadCloudflare();
+if(id==="github") loadGithub();
+if(id==="railway") loadRailway();
+
+}
+
+
+async function api(url,options={}){
+
+const response=await fetch(url,options);
+
+if(!response.ok){
+
+throw new Error(
+await response.text()
+);
+
+}
+
+return response.json();
+
+}
+
+
+async function overview(){
+
+try{
+
+const data=await api("/api/overview");
+
+document
+.getElementById("clientCount")
+.textContent=data.clients;
+
+document
+.getElementById("botCount")
+.textContent=data.bots;
+
+document
+.getElementById("dashboardStatus")
+.innerHTML=
+'<span class="badge">ONLINE</span> پنل فعال است.';
+
+}catch(error){
+
+document
+.getElementById("dashboardStatus")
+.textContent=
+"خطا در دریافت اطلاعات.";
+
+}
+
+}
+
+
+async function addClient(event){
+
+event.preventDefault();
+
+const data=new FormData();
+
+data.append(
+"name",
+document.getElementById("clientName").value
+);
+
+data.append(
+"link",
+document.getElementById("clientLink").value
+);
+
+try{
+
+const result=await api(
+"/api/clients",
+{
+method:"POST",
+body:data
+}
+);
+
+alert(
+"پروتکل تشخیص داده شد: "+
+result.protocol
+);
+
+event.target.reset();
+
+loadClients();
+overview();
+
+}catch(error){
+
+alert("خطا در ذخیره کانفیگ.");
+
+}
+
+}
+
+
+async function loadClients(){
+
+try{
+
+const rows=await api("/api/clients");
+
+const table=
+document.getElementById("clients");
+
+const subs=
+document.getElementById("subscriptionList");
+
+table.innerHTML="";
+subs.innerHTML="";
+
+if(rows.length===0){
+
+table.innerHTML=
+"<tr><td colspan='4'>هنوز کانفیگی ثبت نشده است.</td></tr>";
+
+subs.innerHTML=
+"هنوز Subscription ساخته نشده است.";
+
+return;
+
+}
+
+rows.forEach(function(row){
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+
+<td>${safe(row.name)}</td>
+
+<td>${safe(row.protocol)}</td>
+
+<td>
+<a
+href="/sub/${row.token}"
+target="_blank">
+🔗 باز کردن
+</a>
+</td>
+
+<td>
+<button
+class="danger"
+onclick="deleteClient(${row.id})">
+حذف
+</button>
+</td>
+
+`;
+
+table.appendChild(tr);
+
+
+const div=document.createElement("div");
+
+div.className="notice";
+
+div.innerHTML=`
+
+<b>${safe(row.name)}</b>
+
+<br><br>
+
+پروتکل:
+${safe(row.protocol)}
+
+<br><br>
+
+<a
+href="/sub/${row.token}"
+target="_blank">
+
+/sub/${row.token}
+
+</a>
+
+`;
+
+subs.appendChild(div);
+
+});
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+
+async function deleteClient(id){
+
+if(!confirm("این کانفیگ حذف شود؟"))
+return;
+
+await fetch(
+"/api/clients/"+id,
+{
+method:"DELETE"
+}
+);
+
+loadClients();
+overview();
+
+}
+
+
+async function addBot(event){
+
+event.preventDefault();
+
+const data=new FormData();
+
+data.append(
+"name",
+document.getElementById("botName").value
+);
+
+data.append(
+"token",
+document.getElementById("botToken").value
+);
+
+try{
+
+const result=await api(
+"/api/bots",
+{
+method:"POST",
+body:data
+}
+);
+
+alert(
+"ربات معتبر است: @"+
+result.username
+);
+
+event.target.reset();
+
+loadBots();
+overview();
+
+}catch(error){
+
+alert("Bot Token معتبر نیست.");
+
+}
+
+}
+
+
+async function loadBots(){
+
+try{
+
+const rows=await api("/api/bots");
+
+const table=
+document.getElementById("botRows");
+
+table.innerHTML="";
+
+if(rows.length===0){
+
+table.innerHTML=
+"<tr><td colspan='4'>هنوز رباتی اضافه نشده است.</td></tr>";
+
+return;
+
+}
+
+rows.forEach(function(row){
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+
+<td>${safe(row.name)}</td>
+
+<td>@${safe(row.username)}</td>
+
+<td>
+<span class="badge">
+${row.enabled ? "فعال":"خاموش"}
+</span>
+</td>
+
+<td>
+
+<button
+onclick="testBot(${row.id})">
+تست
+</button>
+
+<button
+class="danger"
+onclick="deleteBot(${row.id})">
+حذف
+</button>
+
+</td>
+
+`;
+
+table.appendChild(tr);
+
+});
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+
+async function testBot(id){
+
+try{
+
+const result=await api(
+"/api/bots/"+id+"/test",
+{
+method:"POST"
+}
+);
+
+alert(
+result.ok
+?
+"✅ ربات سالم است."
+:
+"❌ Telegram خطا داد."
+);
+
+}catch(error){
+
+alert("خطا در ارتباط با Telegram.");
+
+}
+
+}
+
+
+async function deleteBot(id){
+
+if(!confirm("این ربات حذف شود؟"))
+return;
+
+await fetch(
+"/api/bots/"+id,
+{
+method:"DELETE"
+}
+);
+
+loadBots();
+overview();
+
+}
+
+
+async function loadCloudflare(){
+
+try{
+
+const data=await api(
+"/api/cloudflare"
+);
+
+document
+.getElementById("cloudflareResult")
+.innerHTML=
+data.configured
+?
+"✅ اتصال Cloudflare فعال است."
+:
+"⚠️ CLOUDFLARE_API_TOKEN و CLOUDFLARE_ZONE_ID در Railway تنظیم نشده‌اند.";
+
+}catch(error){
+
+document
+.getElementById("cloudflareResult")
+.textContent=
+"خطا در ارتباط با Cloudflare.";
+
+}
+
+}
+
+
+async function loadGithub(){
+
+try{
+
+const data=await api(
+"/api/github"
+);
+
+document
+.getElementById("githubResult")
+.textContent=
+data.configured
+?
+"✅ GitHub API متصل است."
+:
+"⚠️ GITHUB_TOKEN تنظیم نشده است.";
+
+}catch(error){
+
+document
+.getElementById("githubResult")
+.textContent=
+"خطا در ارتباط با GitHub.";
+
+}
+
+}
+
+
+async function loadRailway(){
+
+try{
+
+const data=await api(
+"/api/railway"
+);
+
+document
+.getElementById("railwayResult")
+.innerHTML=
+
+(data.configured
+?
+"✅ Railway API فعال است."
+:
+"⚠️ RAILWAY_API_TOKEN تنظیم نشده است.")
+
++
+"<br><br>Project: "+
+(data.project || "-")
+
++
+"<br>Environment: "+
+(data.environment || "-")
+
++
+"<br>Service: "+
+(data.service || "-");
+
+}catch(error){
+
+document
+.getElementById("railwayResult")
+.textContent=
+"خطا در دریافت وضعیت Railway.";
+
+}
+
+}
+
+
+function safe(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+overview();
+
+setInterval(
+overview,
+10000
+);
+
+</script>
+
+</body>
+</html>
