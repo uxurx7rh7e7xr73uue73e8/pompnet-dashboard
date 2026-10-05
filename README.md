@@ -200,5 +200,121 @@ PompNet Pro Panel - High-performance server monitoring and management web dashbo
 
 
 
+🚀 PompNet Live Panel
+
+پنل مدیریت و مانیتورینگ PompNet برای اجرای مستقیم روی Railway طراحی شده است.
+
+📁 فایل‌های اصلی
+
+"pompnet_live_core_2026.py"
+
+هسته اصلی پنل است و APIها، اطلاعات سیستم، وضعیت Railway و Processهای واقعی را مدیریت می‌کند.
+
+"pompnet_live_ui_2026.html"
+
+رابط گرافیکی پنل است و ظاهر مشکی، بنفش و آبی PompNet را نمایش می‌دهد.
+
+"pompnet_railway_runtime_2026.txt"
+
+شامل اطلاعات و تنظیمات لازم برای اجرای پنل روی Railway است.
+
+---
+
+⚙️ امکانات پنل
+
+- نمایش وضعیت آنلاین پنل
+- نمایش مصرف واقعی CPU
+- نمایش مصرف واقعی RAM
+- نمایش مصرف واقعی Disk
+- نمایش Uptime
+- نمایش Hostname
+- نمایش نسخه Python
+- نمایش PID برنامه
+- نمایش پورت اجرای Railway
+- تشخیص محیط Railway
+- نمایش Processهای واقعی در حال اجرا
+- بروزرسانی خودکار اطلاعات
+- طراحی کاملاً مناسب موبایل
+- رابط کاربری فارسی و RTL
+- طراحی Dark / Neon
+- بدون دیتابیس برای بخش مانیتورینگ
+- بدون حذف یا تغییر فایل‌های قبلی پروژه
+
+---
+
+📂 محل قرارگیری فایل‌ها
+
+دو فایل زیر باید در ریشه پروژه GitHub قرار بگیرند:
+
+pompnet_live_core_2026.py
+pompnet_live_ui_2026.html
+
+یعنی:
+
+pompnet-dashboard/
+├── pompnet_live_core_2026.py
+├── pompnet_live_ui_2026.html
+├── pompnet_railway_runtime_2026.txt
+└── فایل‌های قبلی پروژه
+
+فایل "pompnet_live_ui_2026.html" نباید داخل پوشه "templates" قرار بگیرد.
+
+---
+
+🚂 اجرای پنل روی Railway
+
+در Railway وارد پروژه شو و از قسمت:
+
+Settings
+→ Deploy
+→ Start Command
+
+این دستور را قرار بده:
+
+uvicorn pompnet_live_core_2026:app --host 0.0.0.0 --port $PORT
+
+سپس Deploy جدید انجام بده.
+
+---
+
+🔗 آدرس‌های پنل
+
+بعد از Deploy موفق:
+
+https://YOUR-RAILWAY-DOMAIN/
+
+پنل اصلی باز می‌شود.
+
+برای بررسی سلامت سرویس:
+
+https://YOUR-RAILWAY-DOMAIN/health
+
+برای اطلاعات زنده سیستم:
+
+https://YOUR-RAILWAY-DOMAIN/api/live
+
+برای Processهای واقعی:
+
+https://YOUR-RAILWAY-DOMAIN/api/processes
+
+برای اطلاعات محیط اجرا:
+
+https://YOUR-RAILWAY-DOMAIN/api/info
+
+---
+
+🔐 نکته مهم
+
+این نسخه اطلاعات مانیتورینگ را از محیط واقعی اجرای برنامه دریافت می‌کند و اطلاعات ساختگی برای CPU، RAM، Disk و Processها ایجاد نمی‌کند.
+
+اگر برنامه روی Railway اجرا شود، اطلاعات نمایش داده‌شده مربوط به همان محیط اجرای Railway خواهد بود.
+
+فایل‌های قبلی پروژه حذف یا جایگزین نمی‌شوند و این نسخه با نام‌های جدید اضافه شده است تا احتمال تداخل با ساختار قبلی پروژه کمتر شود.
+
+🎯 هدف نسخه فعلی
+
+هدف این نسخه این است که ابتدا پنل روی Railway بدون خطای Start Command بالا بیاید و یک هسته پایدار برای توسعه امکانات بعدی PompNet داشته باشد.
+
+امکانات مدیریتی پیشرفته مانند اتصال امن به VPS، مدیریت سرویس‌ها، Cloudflare، GitHub و سایر سرویس‌ها باید بعد از راه‌اندازی موفق هسته پنل به‌صورت جداگانه و امن اضافه شوند.
 
 
