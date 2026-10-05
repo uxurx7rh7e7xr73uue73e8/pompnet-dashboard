@@ -1,0 +1,25 @@
+PompNet Railway Runtime
+
+Start Command:
+
+uvicorn pompnet_live_core_2026:app --host 0.0.0.0 --port $PORT
+
+Healthcheck:
+
+/health
+
+Panel:
+
+/
+
+Live API:
+
+/api/live
+
+Process API:
+
+/api/processes
+
+Info API:
+
+/api/info
