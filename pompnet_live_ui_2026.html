@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>PompNet Live Panel</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:
+        radial-gradient(circle at top right,#24104a 0,#0a0714 38%,#05050a 100%);
+    color:#f5f3ff;
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+}
+
+.container{
+    width:min(1200px,94%);
+    margin:auto;
+    padding:25px 0 50px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:20px;
+    border:1px solid #39206b;
+    background:rgba(15,10,30,.78);
+    border-radius:22px;
+    box-shadow:0 0 35px rgba(123,58,237,.15);
+    margin-bottom:20px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#a855f7;
+}
+
+.status{
+    padding:9px 14px;
+    border-radius:30px;
+    background:#092b20;
+    border:1px solid #16a34a;
+    color:#4ade80;
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:rgba(17,12,34,.82);
+    border:1px solid #302052;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.label{
+    color:#9ca3af;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.value{
+    font-size:28px;
+    font-weight:bold;
+    color:#c084fc;
+}
+
+.progress{
+    height:7px;
+    margin-top:15px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#211934;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    transition:.4s;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.info{
+    padding:14px;
+    background:#0d0a18;
+    border:1px solid #291b46;
+    border-radius:13px;
+}
+
+.info b{
+    display:block;
+    margin-bottom:7px;
+    color:#c084fc;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:13px;
+    text-align:right;
+    border-bottom:1px solid #281d40;
+    white-space:nowrap;
+}
+
+th{
+    color:#c084fc;
+}
+
+td{
+    color:#ddd6fe;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.online{
+    background:#063b27;
+    color:#4ade80;
+}
+
+.refresh{
+    border:0;
+    color:white;
+    background:linear-gradient(135deg,#7c3aed,#2563eb);
+    border-radius:12px;
+    padding:10px 16px;
+    cursor:pointer;
+}
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:#6b7280;
+    font-size:12px;
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+@media(max-width:500px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .value{
+        font-size:24px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div>
+            <div class="logo">
+                ⚡ <span>PompNet</span> Live Panel
+            </div>
+
+            <div style="color:#888;margin-top:7px">
+                پنل واقعی پایش محیط Railway
+            </div>
+        </div>
+
+        <div>
+            <span class="status" id="status">
+                ● در حال اتصال
+            </span>
+
+            <button class="refresh" onclick="loadAll()">
+                ↻ بروزرسانی
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="label">CPU</div>
+            <div class="value" id="cpu">--%</div>
+
+            <div class="progress">
+                <div class="bar" id="cpuBar"></div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="label">RAM</div>
+            <div class="value" id="ram">--%</div>
+
+            <div class="progress">
+                <div class="bar" id="ramBar"></div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="label">Disk</div>
+            <div class="value" id="disk">--%</div>
+
+            <div class="progress">
+                <div class="bar" id="diskBar"></div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="label">Uptime</div>
+            <div class="value" id="uptime">--</div>
+        </div>
+
+    </div>
+
+
+    <div class="section card">
+
+        <div class="section-title">
+            🖥 اطلاعات محیط اجرا
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info">
+                <b>Hostname</b>
+                <span id="hostname">--</span>
+            </div>
+
+            <div class="info">
+                <b>Platform</b>
+                <span id="platform">--</span>
+            </div>
+
+            <div class="info">
+                <b>Python</b>
+                <span id="python">--</span>
+            </div>
+
+            <div class="info">
+                <b>Process ID</b>
+                <span id="pid">--</span>
+            </div>
+
+            <div class="info">
+                <b>PORT</b>
+                <span id="port">--</span>
+            </div>
+
+            <div class="info">
+                <b>Railway</b>
+                <span id="railway">--</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section card">
+
+        <div class="section-title">
+            ⚙️ Processهای واقعی در حال اجرا
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>نام</th>
+                        <th>CPU</th>
+                        <th>RAM</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+
+                <tbody id="processes">
+
+                    <tr>
+                        <td colspan="5">
+                            در حال دریافت اطلاعات...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        PompNet Live Panel • Real Runtime Monitoring
+    </div>
+
+</div>
+
+
+<script>
+
+function setBar(id,value){
+
+    value=Math.max(
+        0,
+        Math.min(100,Number(value)||0)
+    );
+
+    document.getElementById(id).style.width=value+"%";
+}
+
+
+function formatBytes(bytes){
+
+    if(!bytes)
+        return "0 B";
+
+    const units=[
+        "B",
+        "KB",
+        "MB",
+        "GB",
+        "TB"
+    ];
+
+    let i=0;
+
+    while(
+        bytes>=1024 &&
+        i<units.length-1
+    ){
+        bytes/=1024;
+        i++;
+    }
+
+    return bytes.toFixed(1)+" "+units[i];
+}
+
+
+function formatUptime(seconds){
+
+    seconds=Number(seconds)||0;
+
+    const d=Math.floor(seconds/86400);
+
+    seconds%=86400;
+
+    const h=Math.floor(seconds/3600);
+
+    seconds%=3600;
+
+    const m=Math.floor(seconds/60);
+
+    const s=Math.floor(seconds%60);
+
+    if(d>0)
+        return `${d} روز ${h} ساعت`;
+
+    if(h>0)
+        return `${h} ساعت ${m} دقیقه`;
+
+    if(m>0)
+        return `${m} دقیقه`;
+
+    return `${s} ثانیه`;
+}
+
+
+async function loadStats(){
+
+    try{
+
+        const response=
+            await fetch(
+                "/api/live",
+                {
+                    cache:"no-store"
+                }
+            );
+
+        if(!response.ok)
+            throw new Error("API");
+
+        const d=
+            await response.json();
+
+
+        document.getElementById("cpu")
+            .textContent=d.cpu+"%";
+
+        document.getElementById("ram")
+            .textContent=d.ram+"%";
+
+        document.getElementById("disk")
+            .textContent=d.disk+"%";
+
+        document.getElementById("uptime")
+            .textContent=formatUptime(d.uptime);
+
+
+        setBar("cpuBar",d.cpu);
+        setBar("ramBar",d.ram);
+        setBar("diskBar",d.disk);
+
+
+        document.getElementById("hostname")
+            .textContent=d.hostname;
+
+        document.getElementById("platform")
+            .textContent=d.platform;
+
+        document.getElementById("python")
+            .textContent=d.python;
+
+        document.getElementById("pid")
+            .textContent=d.pid;
+
+        document.getElementById("port")
+            .textContent=d.port;
+
+        document.getElementById("railway")
+            .textContent=
+                d.railway
+                ? "فعال"
+                : "تشخیص داده نشد";
+
+
+        const status=
+            document.getElementById("status");
+
+        status.textContent=
+            "● آنلاین";
+
+    }
+
+    catch(error){
+
+        document.getElementById("status")
+            .textContent="● خطا در اتصال";
+
+    }
+
+}
+
+
+async function loadProcesses(){
+
+    try{
+
+        const response=
+            await fetch(
+                "/api/processes",
+                {
+                    cache:"no-store"
+                }
+            );
+
+        const data=
+            await response.json();
+
+        const body=
+            document.getElementById("processes");
+
+        body.innerHTML="";
+
+
+        if(!data.processes.length){
+
+            body.innerHTML=
+                `<tr>
+                    <td colspan="5">
+                        Processی پیدا نشد
+                    </td>
+                </tr>`;
+
+            return;
+        }
+
+
+        for(const p of data.processes){
+
+            const tr=
+                document.createElement("tr");
+
+            tr.innerHTML=`
+                <td>${p.pid}</td>
+                <td>${escapeHtml(p.name)}</td>
+                <td>${p.cpu}%</td>
+                <td>${p.ram}%</td>
+                <td>
+                    <span class="badge online">
+                        ${escapeHtml(p.status)}
+                    </span>
+                </td>
+            `;
+
+            body.appendChild(tr);
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("processes")
+            .innerHTML=
+            `<tr>
+                <td colspan="5">
+                    دریافت Processها ناموفق بود
+                </td>
+            </tr>`;
+
+    }
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+async function loadAll(){
+
+    await loadStats();
+    await loadProcesses();
+
+}
+
+
+loadAll();
+
+setInterval(
+    loadStats,
+    5000
+);
+
+setInterval(
+    loadProcesses,
+    10000
+);
+
+</script>
+
+</body>
+</html>
