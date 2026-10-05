@@ -1,5 +1,6 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
+  "name": "mohammad-pump",
   "build": {
     "builder": "NIXPACKS"
   },
