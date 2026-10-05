@@ -1,0 +1,24 @@
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+    // خواندن فایل اصلی پنل (Mohammad.html)
+    let filePath = path.join(__dirname, 'Mohammad.html');
+    
+    fs.readFile(filePath, (err, content) => {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end('<h1>خطا: فایل Mohammad.html پیدا نشد!</h1>');
+        } else {
+            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end(content);
+        }
+    });
+});
+
+// گرفتن پورت به صورت خودکار از ریلی یا پیش‌فرض روی 8080
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
